@@ -1,11 +1,8 @@
+import { createTheme, MantineProvider } from "@mantine/core"; /*importo el proovedor de la libreria Mantine*/
+import "@mantine/core/styles.css"; /*importo los estilos de la libreria Mantine*/
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  createTheme,
-  MantineProvider,
-} from "@mantine/core"; /*importo el proovedor de la libreria Mantine*/
-import "@mantine/core/styles.css"; /*importo los estilos de la libreria Mantine*/
-import { BrowserRouter, Outlet, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { Home } from "./pages/Home";
 import { Layout } from "./pages/Layout";
 
@@ -26,5 +23,5 @@ createRoot(document.getElementById("root")).render(
         </Routes>
       </BrowserRouter>
     </MantineProvider>
-  </StrictMode>
+  </StrictMode>,
 );
