@@ -39,7 +39,7 @@ export const CardClima = ({ ciudad }) => {
       agregarFav(ciudad);
     }
   };
-  c;
+
   return (
     <Card shadow="xl" withBorder>
       <Group wrap="nowrap" justify="space-between">
