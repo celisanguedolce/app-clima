@@ -4,6 +4,7 @@ import { ActionIcon, Card, Group, Image, Loader, Stack, Text, Title, Center } fr
 import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useFavStore } from "../store/favoritosStore";
 import { useClima } from "../services/useClima";
+import { notifications } from "@mantine/notifications";
 
 export const CardClima = ({ ciudad }) => {
   const { agregarFav, eliminarFav, isFavorite } = useFavStore();
@@ -38,7 +39,7 @@ export const CardClima = ({ ciudad }) => {
       agregarFav(ciudad);
     }
   };
-
+  c;
   return (
     <Card shadow="xl" withBorder>
       <Group wrap="nowrap" justify="space-between">
