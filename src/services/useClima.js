@@ -8,7 +8,7 @@ export const useClima = (ciudad) => {
     console.warn("VITE_OPENWEATHER_KEY no está configurada en el entorno");
   }
 
-  const endpoint = ciudad ? `/data/2.5/weather?q=${encodeURIComponent(ciudad)}&lang=es&appid=${API_KEY}` : null;
+  const endpoint = ciudad ? `/data/2.5/weather?q=${encodeURIComponent(ciudad)}&lang=es&units=metric&appid=${API_KEY}` : null;
 
   return useSWR(endpoint, fetcherClima, {
     refreshInterval: 10 * 60 * 1000,

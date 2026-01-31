@@ -1,18 +1,50 @@
 // CREO LA CARD QUE VA A CONTENER EL CLIMA DE MI CIUDAD QUE TRAIGA LA APPI//
 
-import { Card, CardSection, Text, Button, Image } from "@mantine/core";
+import { ActionIcon, Card, Group, Image, Loader, Stack, Text, Title } from "@mantine/core";
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
+import { useFavStore } from "../store/favoritosStore";
+import { useClima } from "../services/useClima";
 
-export const CardClima = ({ infoClima }) => {
-  console.log(infoClima);
+export const CardClima = ({ ciudad }) => {
+  const { agregarFav, eliminarFav, isFavorite } = useFavStore();
+
+  const { data: infoClima, isLoading } = useClima(ciudad);
+
+  if (isLoading) return <Loader />;
+
+  if (!infoClima) return null;
+
+  const weather = infoClima.weather[0];
+
+  // agregarFav(ciudad)
+  const onFavClick = (ciudad) => {
+    // revisar si es favorito
+    if (isFavorite(ciudad)) {
+      eliminarFav(ciudad);
+    } else {
+      agregarFav(ciudad);
+    }
+  };
+
   return (
     <Card shadow="xl" withBorder>
-      <CardSection>
-        <Image src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png" height={160} alt="Norway" />
-      </CardSection>
-      <Text fw={500}>{infoClima.name}</Text>
-      <Button color="blue" fullWidth mt="md" radius="md">
-        AÑADIR A FAVORITOS{" "}
-      </Button>
+      <Group wrap="nowrap" justify="space-between">
+        <Group>
+          <Stack gap={0}>
+            <Title order={2}>
+              {infoClima.name}, {infoClima.sys.country}
+            </Title>
+            <Text tt="capitalize">{weather.description}</Text>
+          </Stack>
+          <Image src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="Icono del clima" h="90" w="auto" />
+        </Group>
+        <ActionIcon onClick={() => onFavClick(infoClima.name)} color="yellow" variant="outline">
+          {isFavorite(infoClima.name) ? <IconHeartFilled /> : <IconHeart />}
+        </ActionIcon>
+      </Group>
+      <Title order={3}>Temperatura: {infoClima.main.temp}ºC</Title>
+      <Text> Maxima: {infoClima.main.temp_max}ºC</Text>
+      <Text> Mínima: {infoClima.main.temp_min}ºC</Text>
     </Card>
   );
 };
