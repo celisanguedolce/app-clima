@@ -1,6 +1,6 @@
 // CREO LA CARD QUE VA A CONTENER EL CLIMA DE MI CIUDAD QUE TRAIGA LA APPI//
 
-import { ActionIcon, Card, Group, Image, Loader, Stack, Text, Title } from "@mantine/core";
+import { ActionIcon, Card, Group, Image, Loader, Stack, Text, Title, Center } from "@mantine/core";
 import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useFavStore } from "../store/favoritosStore";
 import { useClima } from "../services/useClima";
@@ -8,9 +8,22 @@ import { useClima } from "../services/useClima";
 export const CardClima = ({ ciudad }) => {
   const { agregarFav, eliminarFav, isFavorite } = useFavStore();
 
-  const { data: infoClima, isLoading } = useClima(ciudad);
+  const { data: infoClima, isLoading, error } = useClima(ciudad);
 
-  if (isLoading) return <Loader />;
+  if (error) {
+    notifications.show({
+      title: "Error al buscar la ciudad",
+      variant: "light",
+      color: "red",
+    });
+  }
+
+  if (isLoading)
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    );
 
   if (!infoClima) return null;
 
